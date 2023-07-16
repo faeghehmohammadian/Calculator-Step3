@@ -1,0 +1,30 @@
+const Percent =document.getElementById('Percent');
+const CD =document.getElementById('CE');
+const C =document.getElementById('C');
+const Backspace =document.getElementById('Backspace');
+const Division =document.getElementById('Division');
+const Radical =document.getElementById('Radical');
+const Seven =document.getElementById('Seven');
+const Eight=document.getElementById('Eight');
+const Nine =document.getElementById('Nine');
+const Multiplication =document.getElementById('Multiplication');
+const Square =document.getElementById('Square');
+const Four =document.getElementById('Four');
+const Five =document.getElementById('Five');
+const Six =document.getElementById('Six');
+const Minus =document.getElementById('Minus');
+const Cube =document.getElementById('Cube');
+const One =document.getElementById('One');
+const Two =document.getElementById('Two');
+const Three =document.getElementById('Three');
+const Sum =document.getElementById('Sum');
+const Reciprocal =document.getElementById('Reciprocal');
+const SumMinus =document.getElementById('Sum-Minus');
+const Zero =document.getElementById('Zero');
+const Dot =document.getElementById('Dot');
+const Equal =document.getElementById('Equal');
+
+const numberArray=[One,Two,Three,Four,Five,Seven,Eight,Nine]
+
+const InputNumbers=document.getElementById('InputNumber');
+InputNumbers.forEach(element => console.log(element));
