@@ -83,7 +83,7 @@
     color: white;
     background-color: red;
 }
-.shownumber{
+.ShowComputing{
     align-self: flex-end;
     margin-right: 10px;
     font-size: smaller;
@@ -189,7 +189,7 @@
     justify-content: space-around;
     max-width: 400px;
 }
-.smallbtn{
+#smallbtn{
     border-radius: var(--radius-btns);
     float: left;
     width: 100%;
@@ -199,6 +199,9 @@
     justify-content: center;
     font-size: 12px;
 }
+#smallbtn:hover{
+    background-color: var(--btn-hover) ;
+}
 .radical{
     width:20px;
     background-color: var(--btncolor-color);
@@ -206,9 +209,7 @@
 .radical:hover{
     background-color: var(--btn-hover);
 }
-.smallbtn:hover{
-    background-color: var(--btn-hover) ;
-}
+
 .hisbtn{
     float: left;
     width: 70px;

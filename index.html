@@ -36,14 +36,14 @@
               <i style="font-size:20px" class="fa">&#xf1da;</i>
             </div>
           </div>
-          <p class="shownumber">140+55</p>
+          <p class="ShowComputing"></p>
           <div id="InputNumber" class="zero">0</div>
           <div class="smallbtns">
-            <div class="smallbtn">MC</div>
-            <div class="smallbtn">MR</div>
-            <div class="smallbtn">M+</div>
-            <div class="smallbtn">M-</div>
-            <div class="smallbtn">MS</div>
+            <div class="MC" id="smallbtn">MC</div>
+            <div class="MR" id="smallbtn">MR</div>
+            <div class="Mplus" id="smallbtn">M+</div>
+            <div class="Mminus" id="smallbtn">M-</div>
+            <div class="MS" id="smallbtn">MS</div>
           </div>
         </div>
 
@@ -85,15 +85,16 @@
         </div>
         <div class="history">
           <div class="historynav">
-            <button class="hisbtn">History</button>
-            <button class="hisbtn">Memory</button>
+            <button id="historyselect"class="hisbtn" selected>History</button>
+            <button id="memoryselect" class="hisbtn">Memory</button>
           </div>
           <div class="history-item-box" >
-            <div class="historyitems">140+55<br>400</div>
+            <ul class="historyitems"></ul>
+            <ul class="memoryitems"></ul>
           </div> 
           <div class="trashicon"><img class="trashimg" src="https://cdn-icons-png.flaticon.com/512/4960/4960488.png"></div>
         </div>
         <script src="script.js"></script>
-        <script type="module" src="ChangeTheme.js"></script>
+        <script "type"="module" src="ChangeTheme.js"></script>
       </div>
 </html> 
