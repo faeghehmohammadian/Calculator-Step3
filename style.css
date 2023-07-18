@@ -23,7 +23,7 @@
     --radius-btns: 4px;
 
 }
-.container{
+.containerbody{
     width:100vw;
     height: 100vh;
     display: grid;
@@ -88,12 +88,14 @@
     margin-right: 10px;
     font-size: smaller;
 }
-.historyitems{
+.HisItem{
     text-align: end;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
     width: 90%;
 }
-.historyitems:hover{
+.HisItem:hover{
     background-color:var(--btn-hover);
 }
 .result{
@@ -122,8 +124,8 @@
 }
 .history{
     grid-area: history;
-    display: grid;
-    grid-template-rows: 50px auto 40px;
+    display: flex;
+    flex-direction: column;
 }
 .button.color{
     background-color:var(--btncolor-color);
@@ -131,6 +133,35 @@
 .button.color:hover{
     background-color: var(--btn-hover);
 }
+.deletebtnforitem{
+    width : fit-content;
+    height :20px;
+    text-align: center;
+    float: left;
+    margin: 10px;
+    border-radius: 5px;
+}
+.deletebtnforitem:hover{
+    background-color: var(--btn-hover);
+}
+.makebold{
+    font-size: larger;
+    font-weight:700;
+}
+.memorysmallbtn{
+    width :fit-content;
+    height :30px;
+    text-align: center;
+    float: left;
+    padding: 3px;
+    margin-right: 1px;
+    border-radius: 5px;
+
+}
+.memorysmallbtn:hover{
+    background-color: var(--btn-hover);
+}
+
 .appicondiv{
     align-self: flex-start;
     margin-left: 15px;
@@ -259,17 +290,25 @@
     margin-left: 25px;
     font-size:13px;
 }
-.trashicon{
+.history-item-box{
+    height: 90vh;
+}
+.tashiconrow{
     display: flex;
-    justify-content: end;
+    align-content: flex-end;
+    align-self: flex-end;
+    width: 30px;
+    height: 35px;
+    border-radius: var(--radius-btns);
+}
+.trashicon{
+    background: url("Trash.png")  no-repeat; 
+    width: 25px;
+    height: 30px;
+    background-size: 95%;
     margin: 5px;
-}
-.trashimg{
-    width: 20px;
-    height: 22px;
-    padding: 5px;
-}
-.trashimg:hover{
+    }
+.tashiconrow:hover{
     background-color: var(--btn-hover);
 }
 @media only screen and (max-width: 600px) {

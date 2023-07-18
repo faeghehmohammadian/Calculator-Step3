@@ -26,7 +26,6 @@ const Equal =document.getElementById('Equal');
 
 const InputNumber=document.querySelector(".zero");
 const numberArray=document.querySelectorAll('.btn');
-console.log(InputNumber);
 
 const state = {
     firstNumber: "",
@@ -128,6 +127,9 @@ Minus.addEventListener("click", () => {
         InputNumber.textContent = state.firstNumber;
     } else {
         const menha = Number(state.firstNumber) - Number(state.secondNumber);
+        InputNumber.textContent = menha;
+        ShowComputing.textContent = state.firstNumber + " - " + state.secondNumber + " = ";
+        historyAddItem(ShowComputing.textContent ,InputNumber.textContent );
         state.firstNumber = menha;
         ShowComputing.textContent = state.firstNumber + " - ";
         state.secondNumber = InputNumber.textContent;
@@ -142,7 +144,7 @@ function multifunction() {
         state.secondNumber = InputNumber.textContent;
     }
     const zarb = Number(state.firstNumber) * Number(state.secondNumber);
-    ShowComputing.textContent = state.firstNumber + " x " + state.secondNumber + " = ";
+    ShowComputing.textContent = state.firstNumber + " × " + state.secondNumber + " = ";
     state.firstNumber = zarb;
     state.result = zarb;
     InputNumber.textContent = state.result;
@@ -153,13 +155,16 @@ Multiplication.addEventListener("click", () => {
     state.operator = "X";
     const multi = Number(state.firstNumber) * Number(state.secondNumber);
     if (state.firstNumber && !state.secondNumber) {
-        ShowComputing.textContent = state.firstNumber + " x ";
+        ShowComputing.textContent = state.firstNumber + " × ";
         InputNumber.textContent = state.firstNumber;
         return;
     } else {
+        InputNumber.textContent = multi;
+        ShowComputing.textContent = state.firstNumber + " × " + state.secondNumber + " = ";
+        historyAddItem(ShowComputing.textContent ,InputNumber.textContent );
         state.firstNumber = multi;
         state.secondNumber = "";
-        ShowComputing.textContent = state.firstNumber + " x ";
+        ShowComputing.textContent = state.firstNumber + " × ";
         InputNumber.textContent = state.firstNumber;
     }
 });
@@ -181,6 +186,9 @@ Division.addEventListener("click", () => {
         InputNumber.textContent = state.firstNumber;
     } else {
         const divid = Number(state.firstNumber) / Number(state.secondNumber);
+        InputNumber.textContent = divid;
+        ShowComputing.textContent = state.firstNumber + " ÷ " + state.secondNumber + " = ";
+        historyAddItem(ShowComputing.textContent ,InputNumber.textContent );
         ShowComputing.textContent = state.firstNumber + " ÷ ";
         state.secondNumber = "";
         state.secondNumber = InputNumber.textContent;
@@ -376,11 +384,14 @@ Equal.addEventListener("click", () => {
     }
 });
 
+
+
+//History   
+
+const memoryListItems= document.querySelector(".memoryitems");
 const historybtn = document.getElementById('historyselect');
 const memorybtn = document.getElementById('memoryselect');
 const historylist = document.querySelector(".historyitems");
-let memorylist = document.querySelector(".memoryitems");
-
 const deleteBtn = document.querySelector(".trashicon");
 
 let historyItems = [];
@@ -404,20 +415,19 @@ const historyAddItem = () => {
 };
 
 const delbt = document.createElement("button");
-delbt.innerText = "Delete";
-delbt.style.width = "50px";
-delbt.style.height = "20px";
-delbt.classList.add("historyitem");
+delbt.innerHTML='Delete';
+delbt.classList.add("deletebtnforitem");
+//delbt.classList.add("historyitem");
 
 const showhistory = () => {
     historylist.innerHTML = "";
     if (historyItems.length > 0) {
         for (let i of historyItems) {
-        const historyitem = document.createElement("li");
+        const historyitem = document.createElement("div");
         const { ope, res, id } = i;
         historyitem.id = id;
-        historyitem.classList.add("historyitem");
-        historyitem.innerHTML = `${ope} <br> <span>${res}</span>`;
+        historyitem.classList.add("HisItem");
+        historyitem.innerHTML = `${ope} <br> ${res}`;
         historylist.prepend(historyitem);
     }
 
@@ -447,7 +457,7 @@ historybtn.addEventListener("click", () => {
     memorybtn.classList.remove("selected");
     historylist.style.display = "block";
     historylist.innerHTML = "There's no history yet!";
-    memorylist.style.display = "none";
+    memoryListItems.style.display = "none";
     if (historyItems.length > 0) {
         deleteBtn.style.display = "block";
     } else {
@@ -470,15 +480,26 @@ deleteBtn.addEventListener("click", () => {
     }
 });
 
-const memorybtns = document.querySelector(".smallbtns");
-const memoryListItems = document.querySelector(".memoryitems");
+
+//Memory
+
+
+
+const memorybtns = document.querySelectorAll('[id=smallbtn]');
+
 const clearMemoryBtn = document.querySelector(".MC");
 const memoryrestorebtn = document.querySelector(".MR");
+const mplusBtnmain = document.querySelector(".Mplus");
+const mminusBtnmain = document.querySelector(".Mminus");
+const mclearBtnmain = document.querySelector(".MS");
 
 const container = document.createElement("div");
 const mplusBtn = document.createElement("button");
 const mminusBtn = document.createElement("button");
 const mclearBtn = document.createElement("button");
+
+let memoryRestoreValue;
+let countMemoryId = 0;
 
 const restoreMemory = (memoryRestoreValue) => {
     InputNumber.textContent = memoryRestoreValue;
@@ -486,39 +507,30 @@ const restoreMemory = (memoryRestoreValue) => {
     callShowMemory();
 };
 
-let memoryRestoreValue;
-let countMemoryId = 0;
-
 const showMemory = () => {
     memoryListItems.innerHTML = "";
     memoryListItems.style.width = "97%";
     if (calculationMemory.length > 0) {
         for (let memoryItems of calculationMemory) {
         const { memoryItem, id } = memoryItems;
-        const listMemory = document.createElement("li");
-        listMemory.style.width = "100%";
+        const listMemory = document.createElement("div");
+        listMemory.style.width = "90%";
         container.style.display = "flex";
         container.style.flexDirection = "row";
-        container.style.width = "100%";
+        container.style.width = "fit-content";
         mplusBtn.innerHTML = "M+";
-        mplusBtn.style.border = "2px solid black";
-        mplusBtn.style.marginInline = "5px";
-        mplusBtn.classList.add("historyitem");
+        mplusBtn.classList.add("memorysmallbtn");
         mminusBtn.innerHTML = "M-";
-        mminusBtn.style.border = "2px solid black";
-        mminusBtn.style.marginInline = "5px";
-        mminusBtn.classList.add("historyitem");
+        mminusBtn.classList.add("memorysmallbtn");
         mclearBtn.innerHTML = "MC";
-        mclearBtn.style.border = "2px solid black";
-        mclearBtn.style.marginInline = "5px";
-        mclearBtn.classList.add("historyitem");
+        mclearBtn.classList.add("memorysmallbtn");
         container.appendChild(mplusBtn);
         container.appendChild(mminusBtn);
         container.appendChild(mclearBtn);
         listMemory.id = id;
-        listMemory.classList.add("historyitem");
+        listMemory.classList.add("HisItem");
         listMemory.innerHTML = `${memoryItem}`;
-        listMemory.addEventListener("click", function (e) {
+        listMemory.addEventListener("click", function(e) {
             e.target.appendChild(container);
         });
 
@@ -542,19 +554,19 @@ mclearBtn.addEventListener("click", function () {
     showMemory();
 });
 
-const mouseover1 = function () {
-    memoryrestorebtn.style.backgroundColor = "var(--color-hover)";
-};
-const mouseout1 = function () {
-    memoryrestorebtn.style.backgroundColor = "var(--color-primary)";
-};
+// const mouseover1 = function () {
+//     container.style.backgroundColor = "var(--color-hover)";
+// };
+// const mouseout1 = function () {
+//     memoryrestorebtn.style.backgroundColor = "var(--color-primary)";
+// };
 
-const mouseover2 = function () {
-    clearMemoryBtn.style.backgroundColor = "var(--color-hover)";
-};
-const mouseout2 = function () {
-    clearMemoryBtn.style.backgroundColor = "var(--color-primary)";
-};
+// const mouseover2 = function () {
+//     clearMemoryBtn.style.backgroundColor = "var(--color-hover)";
+// };
+// const mouseout2 = function () {
+//     clearMemoryBtn.style.backgroundColor = "var(--color-primary)";
+// };
 
 const memoryAddItem = () => {
     calculationMemory.push({
@@ -568,14 +580,14 @@ const memoryAddItem = () => {
     ) {
         showMemory();
     }
-    memoryrestorebtn.classList.remove("same");
-    memoryrestorebtn.style.cursor = "pointer";
-    memoryrestorebtn.addEventListener("mouseover", mouseover1);
-    memoryrestorebtn.addEventListener("mouseout", mouseout1);
-    clearMemoryBtn.classList.remove("same");
-    clearMemoryBtn.style.cursor = "pointer";
-    clearMemoryBtn.addEventListener("mouseover", mouseover2);
-    clearMemoryBtn.addEventListener("mouseout", mouseout2);
+    // memoryrestorebtn.classList.remove("clearMemoryBtn");
+    // memoryrestorebtn.style.cursor = "pointer";
+    // memoryrestorebtn.addEventListener("mouseover", mouseover1);
+    // memoryrestorebtn.addEventListener("mouseout", mouseout1);
+    // clearMemoryBtn.classList.remove("clearMemoryBtn");
+    // clearMemoryBtn.style.cursor = "pointer";
+    // clearMemoryBtn.addEventListener("mouseover", mouseover2);
+    // clearMemoryBtn.addEventListener("mouseout", mouseout2);
 };
 
 const memoryPlus = () => {
@@ -606,7 +618,6 @@ const memoryRestore = () => {
     let memoryRestoreValue =
         calculationMemory[calculationMemory.length - 1].memoryItem;
     restoreMemory(memoryRestoreValue);
-    console.log(memoryRestoreValue);
 };
 
 const callShowMemory = () => {
@@ -622,8 +633,8 @@ memorybtn.addEventListener("click", () => {
     historylist.style.display = "none";
     historybtn.classList.remove("selected");
     memorybtn.classList.add("selected");
-    memorylist.innerHTML = "There's nothing saved in memory";
-    memorylist.style.display = "block";
+    memoryListItems.innerHTML = "There's nothing saved in memory";
+    memoryListItems.style.display = "block";
     historylist.style.display = "none";
     if (calculationMemory.length > 0) {
         deleteBtn.style.display = "block";
@@ -638,31 +649,33 @@ memoryrestorebtn.addEventListener("click", () => {
 });
 clearMemoryBtn.addEventListener("click", () => {
     memoryClear();
-    clearMemoryBtn.removeEventListener("mouseover");
-    memoryrestorebtn.removeEventListener("mouseover");
+    // clearMemoryBtn.removeEventListener("mouseover");
+    // memoryrestorebtn.removeEventListener("mouseover");
 });
 
-memorybtns.addEventListener("click", (e) => {
+memorybtns.forEach((el) => {
+    el.addEventListener("click", (e) => {
     let memorybtnclick = e.target.classList.value;
     switch (memorybtnclick) {
-        case "mbt mpl":
+        case "mplusBtnmain":
         if (calculationMemory.length === 0) {
             memoryAddItem();
         } else {
             memoryPlus();
         }
         break;
-        case "mbt mns":
+        case "minusBtnmain":
         if (calculationMemory.length === 0) {
             memoryAddItem();
         } else {
             memoryminus();
         }
         break;
-        case "mbt mss":
-        memoryAddItem();
+        case "mclearBtnmain":
+            memoryAddItem();
         break;
     }
+});
 });
 
 mplusBtn.addEventListener("click", memoryPlus);
