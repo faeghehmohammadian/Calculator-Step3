@@ -177,6 +177,9 @@
 .btn{
     font-size: 18px;
 }
+.history-item-box{
+    overflow-y:auto;
+}
 .btnoper{
     font-size: 21px;
 }   

@@ -1,26 +1,17 @@
+
 const Percent =document.getElementById('Percent');
 const CE =document.getElementById('CE');
 const C =document.getElementById('C');
 const Backspace =document.getElementById('Backspace');
 const Division =document.getElementById('Division');
 const Radical =document.getElementById('Radical');
-const Seven =document.getElementById('Seven');
-const Eight=document.getElementById('Eight');
-const Nine =document.getElementById('Nine');
 const Multiplication =document.getElementById('Multiplication');
 const Square =document.getElementById('Square');
-const Four =document.getElementById('Four');
-const Five =document.getElementById('Five');
-const Six =document.getElementById('Six');
 const Minus =document.getElementById('Minus');
 const Cube =document.getElementById('Cube');
-const One =document.getElementById('One');
-const Two =document.getElementById('Two');
-const Three =document.getElementById('Three');
 const Sum =document.getElementById('Sum');
 const Reciprocal =document.getElementById('Reciprocal');
 const SumMinus =document.getElementById('Sum-Minus');
-const Zero =document.getElementById('Zero');
 const Dot =document.getElementById('Dot');
 const Equal =document.getElementById('Equal'); 
 
@@ -45,28 +36,36 @@ const shownum = () => {
 
 numberArray.forEach((el) => {
     el.addEventListener("click", () => {
-        if (state.firstNumber === "" && state.operator === "") {
+        if(state.firstNumber=="0"  && state.operator){
+            state.firstNumber="0";
+            state.secondNumber += el.textContent;
+            state.secondNumber=parseInt(state.secondNumber, 10);
+            console.log("bale");
+        }
+        if (state.firstNumber!="0" && state.firstNumber === "" && state.operator === "") {
             InputNumber.textContent += el.textContent;
         }
-        if (state.operator && state.firstNumber) {
+        if (state.firstNumber!="0" &&state.operator && state.firstNumber) {
             state.secondNumber += el.textContent;
-        } else {
+        } else if (state.firstNumber!="0"){
             state.firstNumber += el.textContent;
         }
+        
         if (state.result) {
             state.firstNumber === state.result;
             state.result = "";
             state.secondNumber = "";
             if (state.firstNumber === "" && state.operator === "") {
-                InputNumber.textContent += el.textContent;
+            InputNumber.textContent += el.textContent;
             }
             if (state.operator && state.firstNumber) {
-                state.secondNumber += el.textContent;
+            state.secondNumber += el.textContent;
             } else {
-                state.firstNumber += el.textContent;
+            state.firstNumber += el.textContent;
             }
         }
     shownum();
+
     });
 });
 
@@ -91,8 +90,10 @@ Sum.addEventListener("click", () => {
         const sum = Number(state.firstNumber) + Number(state.secondNumber);
         state.firstNumber = sum;
         ShowComputing.textContent = state.firstNumber + " + ";
-        InputNumber.textContent = state.firstNumber;
-    } else {
+        InputNumber.textContent = state.firstNumber; 
+        console.log(state.firstNumber);
+        console.log(state.secondNumber);
+    }else {
         const sum = Number(state.firstNumber) + Number(state.secondNumber);
         InputNumber.textContent = sum;
         ShowComputing.textContent = state.firstNumber + " + " + state.secondNumber +"=";
@@ -101,7 +102,6 @@ Sum.addEventListener("click", () => {
         state.secondNumber = sum;
         InputNumber.textContent = sum;
         state.secondNumber = "";
-        
         }
 });
 
@@ -284,15 +284,17 @@ Dot.addEventListener("click", () => {
         InputNumber.textContent = InputNumber.textContent + ".";
         state.firstNumber = InputNumber.textContent;
         shownum();
-    } else if (state.firstNumber && InputNumber.textContent) {
-        InputNumber.textContent = "0.";
-        state.secondNumber = InputNumber.textContent;
-        shownum();
-    }
+        console.log("if alvali = adad aval");}
+    // } else if (state.firstNumber && InputNumber.textContent) {
+    //     InputNumber.textContent = InputNumber.textContent +".";
+    //     state.secondNumber = InputNumber.textContent;
+    //     shownum();
+    // }
     if (state.operator && !state.secondNumber.includes(".")) {
         InputNumber.textContent = InputNumber.textContent + ".";
         state.secondNumber = InputNumber.textContent;
         shownum();
+        console.log("if sevom = adad dom?");
     }
 });
 
@@ -533,7 +535,6 @@ const showMemory = () => {
         listMemory.addEventListener("click", function(e) {
             e.target.appendChild(container);
         });
-
         memoryListItems.prepend(listMemory);
         }
         if (memoryListItems.style.display !== "none") {
@@ -554,19 +555,19 @@ mclearBtn.addEventListener("click", function () {
     showMemory();
 });
 
-// const mouseover1 = function () {
-//     container.style.backgroundColor = "var(--color-hover)";
-// };
-// const mouseout1 = function () {
-//     memoryrestorebtn.style.backgroundColor = "var(--color-primary)";
-// };
+const mouseover1 = function () {
+    container.style.backgroundColor = "var(--color-hover)";
+};
+const mouseout1 = function () {
+    memoryrestorebtn.style.backgroundColor = "var(--color-primary)";
+};
 
-// const mouseover2 = function () {
-//     clearMemoryBtn.style.backgroundColor = "var(--color-hover)";
-// };
-// const mouseout2 = function () {
-//     clearMemoryBtn.style.backgroundColor = "var(--color-primary)";
-// };
+const mouseover2 = function () {
+    clearMemoryBtn.style.backgroundColor = "var(--color-hover)";
+};
+const mouseout2 = function () {
+    clearMemoryBtn.style.backgroundColor = "var(--color-primary)";
+};
 
 const memoryAddItem = () => {
     calculationMemory.push({
@@ -580,14 +581,14 @@ const memoryAddItem = () => {
     ) {
         showMemory();
     }
-    // memoryrestorebtn.classList.remove("clearMemoryBtn");
-    // memoryrestorebtn.style.cursor = "pointer";
-    // memoryrestorebtn.addEventListener("mouseover", mouseover1);
-    // memoryrestorebtn.addEventListener("mouseout", mouseout1);
-    // clearMemoryBtn.classList.remove("clearMemoryBtn");
-    // clearMemoryBtn.style.cursor = "pointer";
-    // clearMemoryBtn.addEventListener("mouseover", mouseover2);
-    // clearMemoryBtn.addEventListener("mouseout", mouseout2);
+    memoryrestorebtn.classList.remove("clearMemoryBtn");
+    memoryrestorebtn.style.cursor = "pointer";
+    memoryrestorebtn.addEventListener("mouseover", mouseover1);
+    memoryrestorebtn.addEventListener("mouseout", mouseout1);
+    clearMemoryBtn.classList.remove("clearMemoryBtn");
+    clearMemoryBtn.style.cursor = "pointer";
+    clearMemoryBtn.addEventListener("mouseover", mouseover2);
+    clearMemoryBtn.addEventListener("mouseout", mouseout2);
 };
 
 const memoryPlus = () => {
@@ -649,10 +650,10 @@ memoryrestorebtn.addEventListener("click", () => {
 });
 clearMemoryBtn.addEventListener("click", () => {
     memoryClear();
-    // clearMemoryBtn.removeEventListener("mouseover");
-    // memoryrestorebtn.removeEventListener("mouseover");
+    clearMemoryBtn.removeEventListener("mouseover");
+    memoryrestorebtn.removeEventListener("mouseover");
 });
-
+console.log(memorybtns);
 memorybtns.forEach((el) => {
     el.addEventListener("click", (e) => {
     let memorybtnclick = e.target.classList.value;
@@ -672,6 +673,7 @@ memorybtns.forEach((el) => {
         }
         break;
         case "mclearBtnmain":
+            console.log("ta inja miad");
             memoryAddItem();
         break;
     }
