@@ -487,7 +487,7 @@ deleteBtn.addEventListener("click", () => {
 
 
 
-const memorybtns = document.querySelectorAll('[id=smallbtn]');
+const memorybtns = document.querySelectorAll('.mem');
 
 const clearMemoryBtn = document.querySelector(".MC");
 const memoryrestorebtn = document.querySelector(".MR");
@@ -532,7 +532,7 @@ const showMemory = () => {
         listMemory.id = id;
         listMemory.classList.add("HisItem");
         listMemory.innerHTML = `${memoryItem}`;
-        listMemory.addEventListener("click", function(e) {
+        listMemory.addEventListener("click", function(e){
             e.target.appendChild(container);
         });
         memoryListItems.prepend(listMemory);
@@ -556,17 +556,17 @@ mclearBtn.addEventListener("click", function () {
 });
 
 const mouseover1 = function () {
-    container.style.backgroundColor = "var(--color-hover)";
+    memoryrestorebtn.style.backgroundColor = "var(--btn-color)";
 };
 const mouseout1 = function () {
-    memoryrestorebtn.style.backgroundColor = "var(--color-primary)";
+    memoryrestorebtn.style.color = "var(--btncolor-color)";
 };
 
 const mouseover2 = function () {
-    clearMemoryBtn.style.backgroundColor = "var(--color-hover)";
+    clearMemoryBtn.style.backgroundColor = "var(--btn-color)";
 };
 const mouseout2 = function () {
-    clearMemoryBtn.style.backgroundColor = "var(--color-primary)";
+    clearMemoryBtn.style.color = "var(--btncolor-hover)";
 };
 
 const memoryAddItem = () => {
@@ -581,14 +581,28 @@ const memoryAddItem = () => {
     ) {
         showMemory();
     }
-    memoryrestorebtn.classList.remove("clearMemoryBtn");
-    memoryrestorebtn.style.cursor = "pointer";
-    memoryrestorebtn.addEventListener("mouseover", mouseover1);
-    memoryrestorebtn.addEventListener("mouseout", mouseout1);
-    clearMemoryBtn.classList.remove("clearMemoryBtn");
-    clearMemoryBtn.style.cursor = "pointer";
-    clearMemoryBtn.addEventListener("mouseover", mouseover2);
-    clearMemoryBtn.addEventListener("mouseout", mouseout2);
+    if(calculationMemory.length >0){
+    // memoryrestorebtn.classList.remove("clearMemoryBtn");
+    // clearMemoryBtn.removeEventListener("mouseover");
+    // memoryrestorebtn.removeEventListener("mouseover");
+    // clearMemoryBtn.classList.remove("clearMemoryBtn");
+    
+
+   // memoryrestorebtn.style.cursor = "pointer";
+    memoryrestorebtn.removeEventListener("mouseover", mouseover1);
+    memoryrestorebtn.removeEventListener("mouseout", mouseout1);
+    //clearMemoryBtn.style.cursor = "pointer";
+    clearMemoryBtn.removeEventListener("mouseover", mouseover2);
+    clearMemoryBtn.removeEventListener("mouseout", mouseout2);
+
+    }else{
+        memoryrestorebtn.style.cursor = "pointer";
+        memoryrestorebtn.addEventListener("mouseover", mouseover1);
+        memoryrestorebtn.addEventListener("mouseout", mouseout1);
+        clearMemoryBtn.style.cursor = "pointer";
+        clearMemoryBtn.addEventListener("mouseover", mouseover2);
+        clearMemoryBtn.addEventListener("mouseout", mouseout2);
+}
 };
 
 const memoryPlus = () => {
@@ -596,6 +610,14 @@ const memoryPlus = () => {
         calculationMemory[calculationMemory.length - 1].memoryItem;
     memoryPlusValue = Number(memoryPlusValue) + Number(InputNumber.textContent);
     calculationMemory[calculationMemory.length - 1].memoryItem = memoryPlusValue;
+    callShowMemory();
+};
+
+const memoryPluscontainer = () => {
+    let m = +mplusBtn.parentElement.parentElement.id;
+    let memoryPlusValue = calculationMemory[m].memoryItem;
+    memoryPlusValue = Number(memoryPlusValue) + Number(InputNumber.textContent);
+    calculationMemory[m].memoryItem = memoryPlusValue;
     callShowMemory();
 };
 
@@ -609,8 +631,8 @@ const memoryminus = () => {
 
 const memoryClear = () => {
     calculationMemory = [];
-    clearMemoryBtn.classList.add("same");
-    memoryrestorebtn.classList.add("same");
+    // clearMemoryBtn.classList.add("same");
+    // memoryrestorebtn.classList.add("same");
     deleteBtn.style.display = "none";
     callShowMemory();
 };
@@ -650,37 +672,51 @@ memoryrestorebtn.addEventListener("click", () => {
 });
 clearMemoryBtn.addEventListener("click", () => {
     memoryClear();
-    clearMemoryBtn.removeEventListener("mouseover");
-    memoryrestorebtn.removeEventListener("mouseover");
+
+    memoryrestorebtn.style.cursor = "pointer";
+    memoryrestorebtn.addEventListener("mouseover", mouseover1);
+    memoryrestorebtn.addEventListener("mouseout", mouseout1);
+    clearMemoryBtn.style.cursor = "pointer";
+    clearMemoryBtn.addEventListener("mouseover", mouseover2);
+    clearMemoryBtn.addEventListener("mouseout", mouseout2);
 });
 console.log(memorybtns);
+
 memorybtns.forEach((el) => {
     el.addEventListener("click", (e) => {
     let memorybtnclick = e.target.classList.value;
+    console.log(memorybtnclick);
     switch (memorybtnclick) {
-        case "mplusBtnmain":
+        case "Mplus mem":
         if (calculationMemory.length === 0) {
             memoryAddItem();
         } else {
             memoryPlus();
         }
-        break;
-        case "minusBtnmain":
+            break;
+        case "Mminus mem":
         if (calculationMemory.length === 0) {
             memoryAddItem();
         } else {
             memoryminus();
         }
-        break;
-        case "mclearBtnmain":
-            console.log("ta inja miad");
-            memoryAddItem();
+            break;
+        case "MS mem":{
+            memoryAddItem();}
         break;
     }
 });
 });
 
-mplusBtn.addEventListener("click", memoryPlus);
+mplusBtn.addEventListener("click",()=> {
+    if (calculationMemory.length === 0) {
+        memoryAddItem();
+    } else {
+        memoryPluscontainer();
+        
+    }
+});
+
 mminusBtn.addEventListener("click", memoryminus);
 
 deleteBtn.addEventListener("click", () => {
@@ -691,13 +727,5 @@ deleteBtn.addEventListener("click", () => {
         memoryClear();
         deleteBtn.style.display = "none";
         showMemory();
-    }
-});
-
-deleteBtn.addEventListener("click", () => {
-    if (historyItems.length > 0 && historylist.style.display !== "none") {
-        historyClear();
-        deleteBtn.style.display = "none";
-        showhistory();
     }
 });
