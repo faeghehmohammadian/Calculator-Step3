@@ -40,7 +40,6 @@ numberArray.forEach((el) => {
             state.firstNumber="0";
             state.secondNumber += el.textContent;
             state.secondNumber=parseInt(state.secondNumber, 10);
-            console.log("bale");
         }
         if (state.firstNumber!="0" && state.firstNumber === "" && state.operator === "") {
             InputNumber.textContent += el.textContent;
@@ -91,8 +90,6 @@ Sum.addEventListener("click", () => {
         state.firstNumber = sum;
         ShowComputing.textContent = state.firstNumber + " + ";
         InputNumber.textContent = state.firstNumber; 
-        console.log(state.firstNumber);
-        console.log(state.secondNumber);
     }else {
         const sum = Number(state.firstNumber) + Number(state.secondNumber);
         InputNumber.textContent = sum;
@@ -283,8 +280,7 @@ Dot.addEventListener("click", () => {
     if (!state.operator && !InputNumber.textContent.includes(".")) {
         InputNumber.textContent = InputNumber.textContent + ".";
         state.firstNumber = InputNumber.textContent;
-        shownum();
-        console.log("if alvali = adad aval");}
+        shownum();}
     // } else if (state.firstNumber && InputNumber.textContent) {
     //     InputNumber.textContent = InputNumber.textContent +".";
     //     state.secondNumber = InputNumber.textContent;
@@ -294,7 +290,6 @@ Dot.addEventListener("click", () => {
         InputNumber.textContent = InputNumber.textContent + ".";
         state.secondNumber = InputNumber.textContent;
         shownum();
-        console.log("if sevom = adad dom?");
     }
 });
 
@@ -553,22 +548,11 @@ mclearBtn.addEventListener("click", function () {
     });
     calculationMemory = [...x];
     showMemory();
+    if(calculationMemory.length==0){
+    memoryrestorebtn.classList.add("hov");
+    clearMemoryBtn.classList.add("hov");
+    }
 });
-
-const mouseover1 = function () {
-    memoryrestorebtn.style.backgroundColor = "var(--btn-color)";
-};
-const mouseout1 = function () {
-    memoryrestorebtn.style.color = "var(--btncolor-color)";
-};
-
-const mouseover2 = function () {
-    clearMemoryBtn.style.backgroundColor = "var(--btn-color)";
-};
-const mouseout2 = function () {
-    clearMemoryBtn.style.color = "var(--btncolor-hover)";
-};
-
 const memoryAddItem = () => {
     calculationMemory.push({
         memoryItem: InputNumber.textContent,
@@ -581,28 +565,9 @@ const memoryAddItem = () => {
     ) {
         showMemory();
     }
-    if(calculationMemory.length >0){
-    // memoryrestorebtn.classList.remove("clearMemoryBtn");
-    // clearMemoryBtn.removeEventListener("mouseover");
-    // memoryrestorebtn.removeEventListener("mouseover");
-    // clearMemoryBtn.classList.remove("clearMemoryBtn");
-    
+    memoryrestorebtn.classList.remove("hov");
+    clearMemoryBtn.classList.remove("hov");
 
-   // memoryrestorebtn.style.cursor = "pointer";
-    memoryrestorebtn.removeEventListener("mouseover", mouseover1);
-    memoryrestorebtn.removeEventListener("mouseout", mouseout1);
-    //clearMemoryBtn.style.cursor = "pointer";
-    clearMemoryBtn.removeEventListener("mouseover", mouseover2);
-    clearMemoryBtn.removeEventListener("mouseout", mouseout2);
-
-    }else{
-        memoryrestorebtn.style.cursor = "pointer";
-        memoryrestorebtn.addEventListener("mouseover", mouseover1);
-        memoryrestorebtn.addEventListener("mouseout", mouseout1);
-        clearMemoryBtn.style.cursor = "pointer";
-        clearMemoryBtn.addEventListener("mouseover", mouseover2);
-        clearMemoryBtn.addEventListener("mouseout", mouseout2);
-}
 };
 
 const memoryPlus = () => {
@@ -628,11 +593,19 @@ const memoryminus = () => {
     calculationMemory[calculationMemory.length - 1].memoryItem = memoryminusValue;
     callShowMemory();
 };
+const memoryminuscontainer = () => {
+    let m = +mplusBtn.parentElement.parentElement.id;
+    let memoryminusValue =
+        calculationMemory[m].memoryItem;
+    memoryminusValue = Number(memoryminusValue) - Number(InputNumber.textContent);
+    calculationMemory[m].memoryItem = memoryminusValue;
+    callShowMemory();
+};
 
 const memoryClear = () => {
     calculationMemory = [];
-    // clearMemoryBtn.classList.add("same");
-    // memoryrestorebtn.classList.add("same");
+    memoryrestorebtn.classList.add("hov");
+    clearMemoryBtn.classList.add("hov");
     deleteBtn.style.display = "none";
     callShowMemory();
 };
@@ -651,7 +624,6 @@ const callShowMemory = () => {
         showMemory();
     }
 };
-
 memorybtn.addEventListener("click", () => {
     historylist.style.display = "none";
     historybtn.classList.remove("selected");
@@ -672,20 +644,12 @@ memoryrestorebtn.addEventListener("click", () => {
 });
 clearMemoryBtn.addEventListener("click", () => {
     memoryClear();
-
-    memoryrestorebtn.style.cursor = "pointer";
-    memoryrestorebtn.addEventListener("mouseover", mouseover1);
-    memoryrestorebtn.addEventListener("mouseout", mouseout1);
-    clearMemoryBtn.style.cursor = "pointer";
-    clearMemoryBtn.addEventListener("mouseover", mouseover2);
-    clearMemoryBtn.addEventListener("mouseout", mouseout2);
+    memoryrestorebtn.classList.add("hov");
+    clearMemoryBtn.classList.add("hov");
 });
-console.log(memorybtns);
-
 memorybtns.forEach((el) => {
     el.addEventListener("click", (e) => {
     let memorybtnclick = e.target.classList.value;
-    console.log(memorybtnclick);
     switch (memorybtnclick) {
         case "Mplus mem":
         if (calculationMemory.length === 0) {
@@ -717,7 +681,13 @@ mplusBtn.addEventListener("click",()=> {
     }
 });
 
-mminusBtn.addEventListener("click", memoryminus);
+mminusBtn.addEventListener("click", ()=>{
+    if (calculationMemory.length === 0) {
+        memoryAddItem();
+    } else {
+        memoryminuscontainer()
+    }
+});
 
 deleteBtn.addEventListener("click", () => {
     if (
