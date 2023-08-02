@@ -204,6 +204,17 @@ Square.addEventListener("click", () => {
     state.firstNumber = Number(t2).toFixed(2);
     InputNumber.textContent = state.firstNumber;
 });
+Cube.addEventListener("click", () => {
+    state.operator = "t3";
+    ShowComputing.textContent = "(" + state.firstNumber +"^3" +")";
+    const t3 = Number(state.firstNumber) * Number(state.firstNumber) * Number(state.firstNumber) ;
+    if(Number.isInteger(t3)){
+        state.firstNumber = Number(t3).toFixed(0);
+    }
+    state.firstNumber = Number(t3).toFixed(3);
+
+    InputNumber.textContent = state.firstNumber;
+});
 
 Radical.addEventListener("click", () => {
     state.operator = "rad";

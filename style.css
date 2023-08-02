@@ -319,8 +319,9 @@
 .tashiconrow:hover{
     background-color: var(--btn-hover);
 }
+
 @media only screen and (max-width: 600px) {
-    .container{
+    .containerbody{
         overflow: auto;
         grid-template-columns:minmax(300px,100%);
         grid-template-areas:
